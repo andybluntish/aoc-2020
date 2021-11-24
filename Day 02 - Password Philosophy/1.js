@@ -1,13 +1,12 @@
 #!/usr/bin/env node
 
 const { join } = require("path");
-const { readFile } = require("fs");
+const { readFileSync } = require("fs");
 const { EOL } = require("os");
-
 const filePath = join(__dirname, "input.txt");
 
-readFile(filePath, "utf8", (err, data) => {
-  if (err) throw err;
+try {
+  const data = readFileSync(filePath, "utf8");
   const lines = data.split(EOL);
   const valid = lines
     .map((line) => {
@@ -25,4 +24,6 @@ readFile(filePath, "utf8", (err, data) => {
   console.log(`out of ${lines.length} passwords`);
   console.log(`${valid.length} are valid`);
   console.log(`and ${lines.length - valid.length} are invalid.`);
-});
+} catch (err) {
+  console.error(err);
+}

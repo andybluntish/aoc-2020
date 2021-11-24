@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const { join } = require("path");
-const { readFile } = require("fs");
+const { readFileSync } = require("fs");
 const { EOL } = require("os");
 const filePath = join(__dirname, "input.txt");
 
@@ -27,8 +27,8 @@ function traverse(map, xDistance, yDistance) {
   return trees;
 }
 
-readFile(filePath, "utf8", (err, data) => {
-  if (err) throw err;
+try {
+  const data = readFileSync(filePath, "utf8");
   const lines = data.split(EOL);
   const attempts = [
     { right: 1, down: 1 },
@@ -50,4 +50,6 @@ readFile(filePath, "utf8", (err, data) => {
   console.log(
     `The product of the sum of trees in all the attempts is ${result}.`
   );
-});
+} catch (err) {
+  console.error(err);
+}

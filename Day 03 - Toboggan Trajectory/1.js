@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 
 const { join } = require("path");
-const { readFile } = require("fs");
+const { readFileSync } = require("fs");
 const { EOL } = require("os");
 const filePath = join(__dirname, "input.txt");
 
-readFile(filePath, "utf8", (err, data) => {
-  if (err) throw err;
+try {
+  const data = readFileSync(filePath, "utf8");
   const lines = data.split(EOL);
   const width = lines[0].length;
   const height = lines.length;
@@ -28,4 +28,6 @@ readFile(filePath, "utf8", (err, data) => {
 
   console.log("Result:");
   console.log(`I will encounter ${trees} trees.`);
-});
+} catch (err) {
+  console.error(err);
+}

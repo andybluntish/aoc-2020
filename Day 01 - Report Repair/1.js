@@ -1,14 +1,13 @@
 #!/usr/bin/env node
 
 const { join } = require("path");
-const { readFile } = require("fs");
+const { readFileSync } = require("fs");
 const { EOL } = require("os");
-
 const filePath = join(__dirname, "input.txt");
 const target = 2020;
 
-readFile(filePath, "utf8", (err, data) => {
-  if (err) throw err;
+try {
+  const data = readFileSync(filePath, "utf8");
   const values = data.split(EOL).map((line) => parseInt(line, 10));
 
   main: for (let a = 0; a < values.length; a++) {
@@ -27,4 +26,6 @@ readFile(filePath, "utf8", (err, data) => {
       }
     }
   }
-});
+} catch (err) {
+  console.error(err);
+}
